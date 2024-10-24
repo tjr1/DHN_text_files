@@ -1,0 +1,672 @@
+
+%% FIELD: Primary Data Directory
+%% NOTES: Path does not include session directory.
+%% NOTES: Can't be cloud at this time
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: PROMPT
+%% VALUE: /mnt/sda
+
+%% FIELD: Secondary Data Directory
+%% NOTES: Applies only if a secondary storage is being used, otherwise VALUE should be NO ENTRY.
+%% NOTES: If a cloud is being used as secondary storage, give the path from the bucket as if it were from root
+%% NOTES: (e.g. "/my_cloud_bucket/MED_Data"), and enter the Cloud Service Provider below.
+%% NOTES: Path does not include session directory. 
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: DEFAULT
+
+%% FIELD: Cloud Service Provider
+%% NOTES: Applies only if a cloud is being used as secondary storage, otherwise VALUE should be NO ENTRY.
+%% NOTES: Support for other cloud service providers may be added in the future (email contact@darkhorseneuro.com to request).
+%% TYPE: string
+%% OPTIONS: GOOGLE, AMAZON
+%% DEFAULT: NO ENTRY
+%% VALUE: DEFAULT
+
+%% FIELD: Cloud Utilities Directory
+%% NOTES: Applies only if a cloud is being used as secondary storage, otherwise VALUE should be NO ENTRY.
+%% NOTES: Path should be from root.
+%% NOTES: example: /home/dhn/DHN/google_cloud/bin
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: DEFAULT
+
+%% FIELD: Allow Segmenting
+%% NOTES: Segmenting requires more memory
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: Auto-Segment Data
+%% NOTES: 
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: NO
+
+%% FIELD: Auto-Segment Interval
+%% NOTES: segment duration of format hh:mm
+%% NOTES: interval timing begins at recording start
+%% NOTES: this value supersedes "Auto-Segment Time" (below), if set
+%% NOTES: set to NO ENTRY here to specify an auto-segment time
+%% NOTES: auto-segmenting does not prevent manual segmenting, however a manual segment resets this timer to zero
+%% NOTES: units in hours:minutes
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: DEFAULT
+
+%% FIELD: Auto-Segment Time
+%% NOTES: 24 hour time of format hh:mm in local time
+%% NOTES: this option is superseded by "Auto-Segment Interval" (above), if set
+%% NOTES: auto-segmenting does not preclude manual segmenting; auto-segmenting will continue at the specified time
+%% NOTES: "SEGMENT AT MIDNIGHT" is equivalent to setting this parameter to 00:00
+%% NOTES: this option creates 24 hour segments (except the first one, and manual segments)
+%% TYPE: string
+%% OPTIONS: SEGMENT AT MIDNIGHT
+%% DEFAULT: SEGMENT AT MIDNIGHT
+%% VALUE: DEFAULT
+
+%% FIELD: Auto-Copy Segments
+%% NOTES: Segments can be auto-copied to secondary file system after closing them 
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: Auto-Delete Copied Segments
+%% NOTES: If segments are copied they can be deleted from the primary file system when the copy is complete
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: NO
+%% VALUE: DEFAULT
+
+%% FIELD: Packet Buffer Seconds
+%% NOTES: This applies only to acquisition with segmenting allowed.
+%% NOTES: If segmenting is done, the buffer size needed is dependent on the speed of the media.
+%% NOTES: Points of reference (with 512 channels): a network mounted drive can require up to 90 sec; a fast internal SSD requires about 3 sec.
+%% NOTES: It's better to set this sensibly & consume fewer system resources, within reason.
+%% TYPE: float
+%% OPTIONS: 
+%% DEFAULT: 10.0
+%% VALUE: DEFAULT
+
+%% FIELD: Session Exists Behavior
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS ONLY: PROMPT IF EXISTS, OVERWRITE, QUIT
+%% DEFAULT: PROMPT IF EXISTS
+%% VALUE: DEFAULT
+
+%% FIELD: Include Segmented Session Records
+%% NOTES: Divide appropriate session-level records into separate files for each segment
+%% NOTES: SyLg (System Log) and Sgmt (Segment) records will go into the standard session records file
+%% NOTES: Note (Annotations) and NlxP (Neuralynx Port) records will be go into their respective segmented record files
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: Block Samples
+%% NOTES: 25000 to 75000 samples per block is a good range for most purposes.
+%% NOTES: Another common choice is to select USE BLOCK DURATION here, 
+%% NOTES: and set block duration to a fixed number such as 1.0 second.
+%% NOTES: If a numerical value is set here, it supersedes any value entered into
+%% NOTES: the "Block Duration" field.
+%% NOTES: If VDS compression or LIne Noise filterinf are selected, longer blocks are recommended
+%% NOTES: (e.g. select USE BLOCK DURATION here, and set "Block Duration" to >= 10.0 seconds below)
+%% TYPE: integer
+%% OPTIONS: USE BLOCK DURATION
+%% DEFAULT: 50000
+%% VALUE: DEFAULT
+
+%% FIELD: Block Duration
+%% NOTES: units of seconds
+%% NOTES: If a value is set in the "Block Samples" field, it supersedes any value entered here.
+%% TYPE: float
+%% OPTIONS: USE BLOCK SAMPLES
+%% DEFAULT: USE BLOCK SAMPLES
+%% VALUE: DEFAULT
+
+%% FIELD: Session Description
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: DEFAULT
+
+%% FIELD: Equipment Description
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS:
+%% DEFAULT: NO ENTRY
+%% VALUE: Neuralynx Atlas / Pegasus acquisition system
+
+%% FIELD: Reference Description
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS:
+%% DEFAULT: NO ENTRY
+%% VALUE: DEFAULT
+
+%% FIELD: Antialias Filter
+%% NOTES: roll off begins at 4 samples per cycle
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: NO
+
+%% FIELD: Line Noise Filter
+%% NOTES: reduces line noise without attenuating physiologic signal in the same band
+%% NOTES: this option performs better with longer blocks - e.g. 10 seconds
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: NO
+%% VALUE: DEFAULT
+
+%% FIELD: Line Noise Alerts
+%% NOTES: send alerts for sustained high line noise
+%% NOTES: threshold for alert set with "Line Noise Alert Threshold" (below)
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: NO
+%% VALUE: DEFAULT
+
+%% FIELD: Line Noise Alert Amplitude Threshold
+%% NOTES: percentage of signal amplitude accounted for by line noise
+%% NOTES: that should trigger an alert (if "Line Noise Alerts" is set - above)
+%% NOTES: range 1 to 100%
+%% TYPE: float
+%% OPTIONS:
+%% DEFAULT: 25.0
+%% VALUE: DEFAULT
+
+%% FIELD: Line Noise Alert Duration Threshold
+%% NOTES: time the of signal amplitude accounted for by line noise should be above the amplitude
+%% NOTES: threshold before an alert should be triggered
+%% NOTES: units in seconds
+%% TYPE: float
+%% OPTIONS:
+%% DEFAULT: 120.0
+%% VALUE: DEFAULT
+
+%% FIELD: Low Frequency Filter Setting
+%% NOTES: units in Hz
+%% TYPE: float
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: 0.0
+
+%% FIELD: High Frequency Filter Setting
+%% NOTES: units in Hz
+%% NOTES: 9 kHz is analog antialiasing filter cutoff in Nlx hardware
+%% NOTES: If VDS compression is selected with LFP filtering enabled,
+%% NOTES: the lowpass cutoff can be set here with the USE HIGH FREQUENCY FILTER SETTING
+%% NOTES: option, in the VDS settings
+%% TYPE: float
+%% OPTIONS:
+%% DEFAULT: 9000.0
+%% VALUE: DEFAULT
+
+%% FIELD: Notch Filter Frequency Setting
+%% NOTES: units in Hz
+%% TYPE: float
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: DEFAULT
+
+%% FIELD: AC Line Frequency
+%% NOTES: Europe / Africa / Asia / Australia mostly 50 Hz, Americas mostly 60 Hz
+%% NOTES: units in Hz
+%% TYPE: float
+%% OPTIONS: 50.0, 60.0
+%% DEFAULT: NO ENTRY
+%% VALUE: 60.0
+
+%% FIELD: Amplitude Units Conversion Factor
+%% NOTES: 
+%% TYPE: float
+%% OPTIONS: 
+%% DEFAULT: 1.0
+%% VALUE: DEFAULT
+
+%% FIELD: Amplitude Units Description
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS:
+%% DEFAULT: microvolts
+%% VALUE: DEFAULT
+
+%% FIELD: Time Base Units Conversion Factor
+%% NOTES: 
+%% TYPE: float
+%% OPTIONS: 
+%% DEFAULT: 1.0
+%% VALUE: DEFAULT
+
+%% FIELD: Time Base Units Description
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: microseconds
+%% VALUE: DEFAULT
+
+%% FIELD: Apply Recording Time Offset
+%% NOTES: 
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: Standard Timezone Acronym
+%% NOTES: e.g "MST" for "Mountain Standard Time"
+%% NOTES: not shorter synonym e.g. "MT" for "Mountain Time"
+%% NOTES: not the Daylight Saving / Summer Time version e.g. "MDT" for "Mountain Daylight Time"
+%% NOTES: this field is used define the correct timezone for territories containing multiple timezones 
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: UTC
+%% VALUE: CST
+
+%% FIELD: Recording Country
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: United States
+
+%% FIELD: Recording Territory
+%% NOTES: state, province, territory, etc.
+%% NOTES: In the US (only), the territory is required to accurately define Daylight Saving Time behavior as some states do not observe it.
+%% NOTES: In the US (only), enter the two-letter state abbreviation or full name of the state.
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: Minnesota
+
+%% FIELD: Recording Locality
+%% NOTES: city, township, village, hamlet, etc.
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: Rochester
+
+%% FIELD: Recording Institution
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: Mayo
+
+%% FIELD: Metadata Section 2 Encryption Level
+%% NOTES: technical data about the recording
+%% TYPE: string
+%% OPTIONS ONLY: LEVEL 0, LEVEL 1, LEVEL 2
+%% DEFAULT: LEVEL 1
+%% VALUE: DEFAULT
+
+%% FIELD: Metadata Section 3 Encryption Level
+%% NOTES: data source identifying data
+%% TYPE: string
+%% OPTIONS ONLY: LEVEL 0, LEVEL 1, LEVEL 2
+%% DEFAULT: LEVEL 2
+%% VALUE: DEFAULT
+
+%% FIELD: Time Series Data Encryption Level
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS ONLY: LEVEL 0, LEVEL 1, LEVEL 2
+%% DEFAULT: LEVEL 0
+%% VALUE: DEFAULT
+
+%% FIELD: Segment Record Encryption Level
+%% NOTES: Typically the same as Metadata Section 2 Encryption Level
+%% TYPE: string
+%% OPTIONS ONLY: LEVEL 0, LEVEL 1, LEVEL 2
+%% DEFAULT: LEVEL 0
+%% VALUE: DEFAULT
+
+%% FIELD: Neuralynx Port Record Encryption Level
+%% NOTES: Neuralynx parallel port events
+%% TYPE: string
+%% OPTIONS ONLY: LEVEL 0, LEVEL 1, LEVEL 2
+%% DEFAULT: LEVEL 0
+%% VALUE: DEFAULT
+
+%% FIELD: Annotation Record Encryption Level
+%% NOTES: Default encryption for user entered notes during acquisition
+%% NOTES: This setting can be overidden individually for each note during acquisition
+%% TYPE: string
+%% OPTIONS ONLY: LEVEL 0, LEVEL 1, LEVEL 2
+%% DEFAULT: LEVEL 2
+%% VALUE: DEFAULT
+
+%% FIELD: System Log Record Encryption Level
+%% NOTES: System entered data during acquisition
+%% TYPE: string
+%% OPTIONS ONLY: LEVEL 0, LEVEL 1, LEVEL 2
+%% DEFAULT: LEVEL 0
+%% VALUE: DEFAULT
+
+%% FIELD: Level 1 Password
+%% NOTES: NO ENTRY is equivalent to LEVEL 0 encryption (no encryption)
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: L1_password
+
+%% FIELD: Level 1 Password Hint
+%% NOTES: presented to user if incorrect password is entered, not required
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: the level 1 password is 'L1_password'
+
+%% FIELD: Level 2 Password
+%% NOTES: NO ENTRY does not prevent LEVEL 1 encryption
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: L2_password
+
+%% FIELD: Level 2 Password Hint
+%% NOTES: presented to user if incorrect password is entered, not required
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: the level 2 password is 'L2_password'
+
+%% FIELD: Level 3 Password
+%% NOTES: Specification of a Level 3 Password is a failsafe mechanism for retrieval of level 1 & level 2 passwords
+%% NOTES: The "USE DHN L3 PW" option will encode using a proprietary Dark Horse Neuro password
+%% NOTES: DHN can retrieve lost passwords if this is option is selected
+%% TYPE: string
+%% OPTIONS: USE DHN L3 PW
+%% DEFAULT: NO ENTRY
+%% VALUE: USE DHN L3 PW
+
+%% FIELD: Include Session-level Segment Records
+%% NOTES: tiny footprint, significantly improves search performance
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: Include Channel-level Segment Records
+%% NOTES: tiny footprint, significantly improves search performance
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: Include Neuralynx Port Records
+%% NOTES: 
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: Neuralynx Port Trigger Mode
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS ONLY: ANY CHANGE, HIGH BIT SET, NO TRIGGER
+%% DEFAULT: ANY CHANGE
+%% VALUE: DEFAULT
+
+%% FIELD: Neuralynx Port Zero is Reset
+%% NOTES: In NO TRIGGER and ANY CHANGE trigger modes, subport values of zero do not generate records.
+%% NOTES: This allows NO TRIGGER mode to store values only when there the subport is non-zero.
+%% NOTES: This allows ANY CHANGE mode to store onset value / time pairs only, when offset times are not required, reducing the number of records.
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: Number of Subports in Neuralynx Port
+%% NOTES: no subports (full 32 bits) == 1 subport in this context
+%% TYPE: integer
+%% OPTIONS ONLY: 1, 2, 4
+%% DEFAULT: 2
+%% VALUE: 1
+
+%% FIELD: Remote Notification Email Address
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: richner.thomas@mayo.edu
+
+%% FIELD: Remote Notification Email Addressee
+%% NOTES: recipient's name
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: Tom Richner
+
+%% FIELD: Remote Notification Text Number
+%% NOTES: hyphens, spaces, parentheses, and commas will be stripped out
+%% NOTES: plus signs will be left in
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: DEFAULT
+
+%% FIELD: Remote Notification for Alerts
+%% NOTES: Critical information about ongoing recording
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: NO
+
+%% FIELD: Remote Alert Notification Medium
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS ONLY: TEXT, EMAIL, TEXT AND EMAIL
+%% DEFAULT: TEXT
+%% VALUE: EMAIL
+
+%% FIELD: Use Watchdog Service
+%% NOTES: Use the DHN Watchdog server to alert if the acquisition software terminates unexpectedly (e.g. power outage, process killed).
+%% NOTES: The alert will be communicated to the alert recipient via the alert notification media, specified above or in the software.
+%% NOTES: At least one notification medium must exist to use the service.
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: Remote Notification for Updates
+%% NOTES: Routine information about the ongoing recording
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: NO
+%% VALUE: DEFAULT
+
+%% FIELD: Remote Update Notification Medium
+%% NOTES: 
+%% TYPE: string
+%% OPTIONS ONLY: TEXT, EMAIL, TEXT AND EMAIL
+%% DEFAULT: EMAIL
+%% VALUE: DEFAULT
+
+%% FIELD: Remote Update Notification Frequency
+%% NOTES: units in hours
+%% TYPE: float
+%% OPTIONS: 
+%% DEFAULT: 1.0
+%% VALUE: DEFAULT
+
+%% FIELD: Neuralynx PC MAC Address
+%% NOTES: Required field.
+%% NOTES: On the Neuralynx acquisition PC, in a terminal (Command Prompt) type "ipconfig /all <enter>" 
+%% NOTES: and get the MAC address associated with the "192.168.3.100" IP address.
+%% NOTES: ipconfig formats MAC address with hyphens, e.g. 00-00-00-00-00-00, substitute with colons here
+%% NOTES: the MAC address is not necessary in broadcast mode
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: 
+%% VALUE: 68:05:CA:1C:EC:3B
+
+%% FIELD: Receive As Broadcast
+%% NOTES: connection from Neuralynx, or forwarder
+%% NOTES: set to "NO" for a standard Neuralynx setup
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: NO
+%% VALUE: DEFAULT
+
+%% FIELD: Receiving Local EN Interface Name
+%% NOTES: connection from Neuralynx, or forwarder
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: eno1
+%% VALUE: DEFAULT
+
+%% FIELD: Receiving Local IP Address
+%% NOTES: local IP connected to Neuralynx acquisition PC (Pegasus or Cheetah), or forwarding server
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: 192.168.3.100
+%% VALUE: DEFAULT
+
+%% FIELD: Receiving Server IP Address
+%% NOTES: IP address of Neuralynx acquisition hardware (Atlas or Digital Lynx), or forwarding server
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: 192.168.3.10
+%% VALUE: DEFAULT
+
+%% FIELD: Receiving Port Number
+%% NOTES: connection from Neuralynx acquisition hardware (Atlas or Digital Lynx), or forwarding server
+%% NOTES: 26090 is hard coded in Neuralynx acquisition hardware
+%% TYPE: integer
+%% OPTIONS: 
+%% DEFAULT: 26090
+%% VALUE: DEFAULT
+
+%% FIELD: Receiving Subnet Mask
+%% NOTES: on connection to Neuralynx acquisition hardware (Atlas or Digital Lynx), or forwarding server
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: 255.255.255.0
+%% VALUE: DEFAULT
+
+%% FIELD: Forward Neuralynx Packets
+%% NOTES: DHN Acq can forward Neuralynx packets from a second ethernet interface, as if they were coming directly from Neuralynx
+%% NOTES: You cannot forward to the Neuralynx acquisition PC with this (Nlx control connection is also on that line)
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: NO
+%% VALUE: DEFAULT
+
+%% FIELD: Forward As Broadcast
+%% NOTES: applies to "Forward Neuralynx Packets" option
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: NO
+%% VALUE: DEFAULT
+
+%% FIELD: Forwarding Local EN Interface Name
+%% NOTES: applies to "Forward Neuralynx Packets" option
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: NO ENTRY
+%% VALUE: DEFAULT
+
+%% FIELD: Forwarding Local IP Address
+%% NOTES: applies to "Forward Neuralynx Packets" option
+%% NOTES: choose a different subnet from Neuralynx input (e.g. if Nlx == 192.168.3.10, use 192.168.1.10 for forwarding)
+%% NOTES: and use that subnet to receive the forwarded data
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: 192.168.1.10
+%% VALUE: DEFAULT
+
+%% FIELD: Forwarding Client IP Address
+%% NOTES: applies to "Forward Neuralynx Packets" option
+%% NOTES: not necessary for "Forwarding Broadcast Mode" below
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: 192.168.1.100
+%% VALUE: DEFAULT
+
+%% FIELD: Forwarding Port Number
+%% NOTES: Cannot be the same as receiving port 
+%% NOTES: 26090 is Neuralynx acquisition hardware (hard coded - DO NOT USE THIS PORT)
+%% TYPE: integer
+%% OPTIONS: 
+%% DEFAULT: 26091
+%% VALUE: DEFAULT
+
+%% FIELD: Forwarding Subnet Mask
+%% NOTES: applies to "Forward Neuralynx Packets" option
+%% NOTES: on connection to forwarding clients
+%% TYPE: string
+%% OPTIONS: 
+%% DEFAULT: 255.255.255.0
+%% VALUE: DEFAULT
+
+%% FIELD: Non-blocking Forwarding
+%% NOTES: applies to "Forward Neuralynx Packets" option
+%% NOTES: use when forwarding is stalling main acquisition (e.g. extreme channel counts)
+%% NOTES: may result in some packet drop on forwarding socket
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: NO
+%% VALUE: YES
+
+%% FIELD: Save Parity Data
+%% NOTES: Save data repair information for MED files
+%% NOTES: Increases size by approximately one channel
+%% TYPE: string
+%% OPTIONS ONLY: NONE, ALL FILES, ALL DATA FILES, SEGMENT DATA FILES
+%% DEFAULT: ALL FILES
+%% VALUE: DEFAULT
+
+%% FIELD: Compression Algorithm
+%% NOTES: RED: Range Encoded Derivatives => lossless
+%% NOTES: PRED: Predictive Range Encoded Derivatives => lossless (slower than RED, but better compression)
+%% NOTES: MBE: Minimal Bit Encoding => lossless (generally used as fall through algorithm for degenerate data)
+%% NOTES: VDS: Vectorized Data Stream => lossy (highest compression level; see other VDS options below)
+%% TYPE: string
+%% OPTIONS ONLY: RED, PRED, MBE, VDS
+%% DEFAULT: PRED
+%% VALUE: DEFAULT
+
+%% FIELD: Compression Algorithm Fall Through
+%% NOTES: If MBE would be smaller, block is compressed with MBE.
+%% NOTES: Generally only occurs in blocks with highly degenerate data.
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: YES
+%% VALUE: DEFAULT
+
+%% FIELD: VDS Threshold
+%% NOTES: Applies only to VDS compression
+%% NOTES: Range 0.0 to 10.0
+%% NOTES: 0 is lossless (redirects to PRED), 10 is very lossy.
+%% TYPE: float
+%% OPTIONS: 
+%% DEFAULT: 5.0
+%% VALUE: DEFAULT
+
+%% FIELD: VDS LFP Filter Cutoff
+%% NOTES: Applies only to VDS compression
+%% NOTES: Units in Hz
+%% TYPE: float
+%% OPTIONS: USE HIGH FREQUENCY FILTER SETTING, NO FILTER
+%% DEFAULT: 600.0
+%% VALUE: 600.0
+
+%% FIELD: VDS Scale by Baseline
+%% NOTES: Applies only to VDS compression
+%% NOTES: Scale data by block baseline width. Can increass compression by ~30%.
+%% NOTES: Creates higher compression & decreased fidelity in proportion to the baseline width on a block by block basis.
+%% TYPE: ternary
+%% OPTIONS ONLY: YES, NO
+%% DEFAULT: NO
+%% VALUE: DEFAULT
+

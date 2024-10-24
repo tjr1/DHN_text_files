@@ -5,7 +5,7 @@
 %% TYPE: string
 %% OPTIONS: 
 %% DEFAULT: PROMPT
-%% VALUE: /mnt/sda
+%% VALUE: /mnt/MED_Data_iSSD
 
 %% FIELD: Secondary Data Directory
 %% NOTES: Applies only if a secondary storage is being used, otherwise VALUE should be NO ENTRY.
@@ -46,7 +46,7 @@
 %% TYPE: ternary
 %% OPTIONS ONLY: YES, NO
 %% DEFAULT: YES
-%% VALUE: NO
+%% VALUE: DEFAULT
 
 %% FIELD: Auto-Segment Interval
 %% NOTES: segment duration of format hh:mm
@@ -158,7 +158,7 @@
 %% TYPE: ternary
 %% OPTIONS ONLY: YES, NO
 %% DEFAULT: YES
-%% VALUE: NO
+%% VALUE: DEFAULT
 
 %% FIELD: Line Noise Filter
 %% NOTES: reduces line noise without attenuating physiologic signal in the same band
@@ -270,14 +270,14 @@
 %% TYPE: string
 %% OPTIONS: 
 %% DEFAULT: UTC
-%% VALUE: CST
+%% VALUE: DEFAULT
 
 %% FIELD: Recording Country
 %% NOTES: 
 %% TYPE: string
 %% OPTIONS: 
 %% DEFAULT: NO ENTRY
-%% VALUE: United States
+%% VALUE: DEFAULT
 
 %% FIELD: Recording Territory
 %% NOTES: state, province, territory, etc.
@@ -286,21 +286,29 @@
 %% TYPE: string
 %% OPTIONS: 
 %% DEFAULT: NO ENTRY
-%% VALUE: Minnesota
+%% VALUE: DEFAULT
 
 %% FIELD: Recording Locality
 %% NOTES: city, township, village, hamlet, etc.
 %% TYPE: string
 %% OPTIONS: 
 %% DEFAULT: NO ENTRY
-%% VALUE: Rochester
+%% VALUE: DEFAULT
 
 %% FIELD: Recording Institution
 %% NOTES: 
 %% TYPE: string
 %% OPTIONS: 
 %% DEFAULT: NO ENTRY
-%% VALUE: Mayo
+%% VALUE: DEFAULT
+
+%% Encryption NOTES:
+%% LEVEL 0 LEVEL 1 LEVEL 2
+%% Level 0 encryption is equivalent to no encryption
+%% Level 1 encryption requires specification of a LEVEL 1 password
+%% Level 2 encryption requires specification of a LEVEL 2 password and a LEVEL 1 password (even if LEVEL 1 encryption is not used anywhere in the file).
+%% Level 2 passwords provide access to both level 1 & 2 encrypted fields. (Level 1 passwords do not need to be explicitly entered.)
+%% The software will determine whether the entered password is Level 1 or Level 2; this does not need to be specified.
 
 %% FIELD: Metadata Section 2 Encryption Level
 %% NOTES: technical data about the recording
@@ -438,14 +446,14 @@
 %% TYPE: string
 %% OPTIONS: 
 %% DEFAULT: NO ENTRY
-%% VALUE: richner.thomas@mayo.edu
+%% VALUE: DEFAULT
 
 %% FIELD: Remote Notification Email Addressee
 %% NOTES: recipient's name
 %% TYPE: string
 %% OPTIONS: 
 %% DEFAULT: NO ENTRY
-%% VALUE: Tom Richner
+%% VALUE: DEFAULT
 
 %% FIELD: Remote Notification Text Number
 %% NOTES: hyphens, spaces, parentheses, and commas will be stripped out
@@ -460,14 +468,14 @@
 %% TYPE: ternary
 %% OPTIONS ONLY: YES, NO
 %% DEFAULT: YES
-%% VALUE: NO
+%% VALUE: DEFAULT
 
 %% FIELD: Remote Alert Notification Medium
 %% NOTES: 
 %% TYPE: string
 %% OPTIONS ONLY: TEXT, EMAIL, TEXT AND EMAIL
 %% DEFAULT: TEXT
-%% VALUE: EMAIL
+%% VALUE: DEFAULT
 
 %% FIELD: Use Watchdog Service
 %% NOTES: Use the DHN Watchdog server to alert if the acquisition software terminates unexpectedly (e.g. power outage, process killed).
@@ -508,7 +516,7 @@
 %% TYPE: string
 %% OPTIONS: 
 %% DEFAULT: 
-%% VALUE: 68:05:CA:1C:EC:3B
+%% VALUE: 00:00:00:00:00:00
 
 %% FIELD: Receive As Broadcast
 %% NOTES: connection from Neuralynx, or forwarder
@@ -616,7 +624,7 @@
 %% TYPE: ternary
 %% OPTIONS ONLY: YES, NO
 %% DEFAULT: NO
-%% VALUE: YES
+%% VALUE: DEFAULT
 
 %% FIELD: Save Parity Data
 %% NOTES: Save data repair information for MED files
@@ -659,7 +667,7 @@
 %% TYPE: float
 %% OPTIONS: USE HIGH FREQUENCY FILTER SETTING, NO FILTER
 %% DEFAULT: 600.0
-%% VALUE: 600.0
+%% VALUE: DEFAULT
 
 %% FIELD: VDS Scale by Baseline
 %% NOTES: Applies only to VDS compression
